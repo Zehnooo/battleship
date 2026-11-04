@@ -29,11 +29,16 @@ export default class Gameboard {
 
     placeShip(shipType, row, col, placementIndex = 0) {
         const { allPlacements } = this.getPlacementOptions(shipType, row, col);
-        const selectedPlacement = allPlacements[0];
 
-        if (!Number.isInteger(placementIndex) || !selectedPlacement) {
+        if (
+            !Number.isInteger(placementIndex) ||
+            placementIndex < 0 ||
+            placementIndex >= allPlacements.length
+        ) {
             throw new RangeError('Invalid placement index');
         }
+
+        const selectedPlacement = allPlacements[placementIndex];
 
         const ship = new Ship(shipType);
 
@@ -60,8 +65,8 @@ export default class Gameboard {
     #updateTile(row, col, ship = null) {
         const tile = this.board[row - 1][col - 1];
         tile.ship = ship;
-        tile.shipName = ship.name;
-        tile.hasShip = ship.name !== null;
+        tile.shipName = ship?.name ?? null;
+        tile.hasShip = ship !== null;
     }
 
     #getPlacements(length, startCoords) {
