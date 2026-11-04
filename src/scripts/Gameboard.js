@@ -26,7 +26,25 @@ export default class Gameboard {
         }
         return board;
     }
-    placeShip(shipType, row, col) {
+
+    placeShip(shipType, row, col, placementIndex = 0) {
+        const { allPlacements } = this.getPlacementOptions(shipType, row, col);
+        const selectedPlacement = allPlacements[0];
+
+        if (!Number.isInteger(placementIndex) || !selectedPlacement) {
+            throw new RangeError('Invalid placement index');
+        }
+
+        const ship = new Ship(shipType);
+
+        for (const [r, c] of selectedPlacement) {
+            this.#updateTile(r, c, ship);
+        }
+
+        return ship;
+    }
+
+    getPlacementOptions(shipType, row, col) {
         if (isOutside(row) || isOutside(col)) { throw new RangeError('Not a valid coordinate (1 - 10)'); }
     const ship = new Ship(shipType);
     const placements = this.#getPlacements(ship.length, [row, col] );
@@ -38,14 +56,12 @@ export default class Gameboard {
         allPlacements: [...placements],
     };
     }
-    preview() {
 
-    }
-
-    #updateTile(row, col, name = null) {
+    #updateTile(row, col, ship = null) {
         const tile = this.board[row - 1][col - 1];
-        tile.shipName = name;
-        tile.hasShip = name !== null;
+        tile.ship = ship;
+        tile.shipName = ship.name;
+        tile.hasShip = ship.name !== null;
     }
 
     #getPlacements(length, startCoords) {
