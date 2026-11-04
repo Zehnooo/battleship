@@ -17,4 +17,11 @@ test('Init gameboard and place all ships', () => {
     gb.placeShip('SUBMARINE', 9, 9);
     gb.placeShip('PATROL_BOAT', 5, 4);
     console.log(gb.returnBoard());
+
+    expect(gb.returnTile(1, 1).hasShip).toBe(true);
+    expect(gb.returnTile(5, 1).hasShip).toBe(true);
+    expect(gb.returnTile(10, 2).hasShip).toBe(true);
+    expect(gb.returnTile(7, 9).hasShip).toBe(true);
+
+    expect(gb.returnTile(1, 2).hasShip).toBe(false);
 });
