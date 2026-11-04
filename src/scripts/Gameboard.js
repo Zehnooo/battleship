@@ -33,15 +33,19 @@ export default class Gameboard {
 
     if (placements.length === 0) { throw new Error('No valid ship placements'); }
 
-    const defaultPlacement = placements[0];
+    return {
+        defaultPlacement: placements[0],
+        allPlacements: [...placements],
+    };
+    }
+    preview() {
 
-    for (const [r, c] of defaultPlacement) {
-        const tile = this.board[r - 1][c - 1];
-        tile.shipName = ship.name;
-        tile.hasShip = true;
     }
 
-    return placements;
+    #updateTile(row, col, name = null) {
+        const tile = this.board[row - 1][col - 1];
+        tile.shipName = name;
+        tile.hasShip = name !== null;
     }
 
     #getPlacements(length, startCoords) {
