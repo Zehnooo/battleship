@@ -7,6 +7,7 @@ export default class Gameboard {
     constructor() {
         this.board = this.#createBoard();
         this.missedAttacks = [];
+        this.ships = [];
     }
     #createBoard() {
         const board = [];
@@ -46,6 +47,7 @@ export default class Gameboard {
             this.#updateTile(r, c, ship);
         }
 
+        this.ships.push(ship);
         return ship;
     }
 
@@ -107,10 +109,23 @@ export default class Gameboard {
 
     receiveAttack(row, col) {
         if (isOutside(row) || isOutside(col)) { throw new RangeError('Not a valid coordinate (1 - 10)'); }
-        const target = this.board[row - 1][col - 1];
-        console.log(target);
+        const tile = this.board[row - 1][col - 1];
+
+        if (tile.isHit || tile.isMiss) { throw new Error('Tile has already been attacked.'); }
+
+        if (!tile.hasShip) {
+            this.missedAttacks.push([row, col]);
+            tile.isMiss = true;
+        } else {
+            tile.isHit = true;
+            tile.ship.hit();
+        }
+        return tile;
     }
 
+    areAllSunk() {
+        return this.ships.length === 0 ? false : this.ships.every(ship => ship.isSunk());
+    }
     returnTile(row, col) {
         return this.board[row - 1][col - 1];
     }
