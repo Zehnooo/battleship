@@ -22,8 +22,8 @@ export const dom = {
         "gameboard": (player) => {
             const p = {...player}
             const boardData = p.gameboard.board;
-            const con = dom.create('div', `${p.type}-board-container`);
-            const board = dom.create('div', `${p.type}-board-container`);
+            const con = dom.create('div', `${p.type}-board-container`, null, ['board']);
+            const board = dom.create('div', `${p.type}-board`, null, ['board-grid']);
 
             for (let i = 1; i <= boardData.length; i++) {
                 const rowEl = dom.build.game_row(boardData[i - 1], i);
@@ -36,7 +36,7 @@ export const dom = {
         },
 
         "game_row": (rowData, rowNum) => {
-            const rowEl = dom.create('div', `row-${rowNum}`);
+            const rowEl = dom.create('div', `row-${rowNum}`, null, ['board-row']);
 
             rowData.forEach(tileData => {
                 const tileEl = dom.build.game_tile(tileData);
@@ -53,6 +53,7 @@ export const dom = {
             tile.appendChild(span);
             console.log(tileData);
 
+            tileEl.appendChild(tile);
             return tileEl;
         }
     }
