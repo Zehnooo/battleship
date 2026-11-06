@@ -126,9 +126,11 @@ export default class Gameboard {
     areAllSunk() {
         return this.ships.length === 0 ? false : this.ships.every(ship => ship.isSunk());
     }
+
     returnTile(row, col) {
         return this.board[row - 1][col - 1];
     }
+
     returnBoard() {
         let str = '';
         this.board.forEach(row => {
@@ -141,4 +143,5 @@ export default class Gameboard {
         });
         return str;
     }
+
 }
