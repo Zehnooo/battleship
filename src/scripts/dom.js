@@ -22,8 +22,15 @@ export const dom = {
         "gameboard": (player) => {
             const p = {...player}
             const boardData = p.gameboard.board;
-            const con = dom.create('div', `${p.type}-board-container`, null, ['board']);
+            const con = dom.create('div', `${p.type}-board-container`, null, ['board-con']);
             const board = dom.create('div', `${p.type}-board`, null, ['board-grid']);
+
+            const playerName = dom.create('div', null, null, ['player-con']);
+            playerName.append(dom.create('h4', null, String(player.type === 'user' ? 'YOU' : 'CPU'), ['player-name']));
+
+            board.append(playerName);
+            board.append(dom.build.axis_row([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'y-axis'));
+            board.append(dom.build.axis_row([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'x-axis'));
 
             for (let i = 1; i <= boardData.length; i++) {
                 const rowEl = dom.build.game_row(boardData[i - 1], i);
@@ -41,18 +48,39 @@ export const dom = {
             rowData.forEach(tileData => {
                 const tileEl = dom.build.game_tile(tileData);
                 rowEl.appendChild(tileEl);
-            })
+            });
+
             return rowEl;
         },
 
         "game_tile": (tileData) => {
-            const tileEl = dom.create('div');
-            const tile = dom.create('div');
-            const span = dom.create('span', null, null, ['tile', 'blank']);
+            const tileEl = dom.create('div', null, null, ['tile-con', 'game-tile']);
+            const tile = dom.create('div', null, null, ['tile', 'blank']);
+            const span = dom.create('span', null, null);
 
             tile.appendChild(span);
-            console.log(tileData);
 
+            tileEl.appendChild(tile);
+            return tileEl;
+        },
+
+        "axis_row": (nums, axis) => {
+            const rowEl = dom.create('div', String(axis), null, ['axis-row']);
+
+            nums.forEach(num => {
+                const tileEl = dom.build.axis_tile(num);
+                rowEl.appendChild(tileEl);
+            });
+
+            return rowEl;
+        },
+
+        "axis_tile": (num) => {
+            const tileEl = dom.create('div', null, null, ['tile-con']);
+            const tile = dom.create('div', null, null, ['tile']);
+            const span = dom.create('span', null, String(num));
+
+            tile.appendChild(span);
             tileEl.appendChild(tile);
             return tileEl;
         }
