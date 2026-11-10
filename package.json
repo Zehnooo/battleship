@@ -5,13 +5,21 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack",
+    "serve": "webpack serve"
   },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@babel/preset-env": "^7.29.7",
     "babel-jest": "^30.5.2",
-    "jest": "^30.5.2"
+    "css-loader": "^7.1.5",
+    "html-webpack-plugin": "^5.6.8",
+    "jest": "^30.5.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.112.2",
+    "webpack-cli": "^7.3.1",
+    "webpack-dev-server": "^6.1.0"
   }
 }
