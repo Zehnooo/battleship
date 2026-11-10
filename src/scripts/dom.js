@@ -109,7 +109,7 @@ export const dom = {
         },
 
         "error_page": () => {
-            const container = dom.create('div', null, null, ['error-page', 'page']);
+            const container = dom.create('div', 'error', null, ['error-page', 'page']);
 
             const title = dom.create('h1', null, '404 - Page Not Found');
             const message = dom.create('p', null, "The page you're looking for doesn't exist.");
@@ -124,11 +124,15 @@ export const dom = {
         },
 
         "game_page": () => {
+            const container = dom.create('div', 'game', null, ['page']);
+
+
+
             return null;
         },
 
         "settings_page": () => {
-            return null;
+
         }
     }
 }
