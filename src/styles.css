@@ -6,6 +6,8 @@
     --text: #e8edf4;
     --tile: #26384d;
     --tile-hover: #3b5875;
+    --font-heading: 'Rajdhani', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 body {
@@ -13,7 +15,53 @@ body {
     display: flex;
     background: var(--background);
     color: var(--text);
-    font-family: system-ui, sans-serif;
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, button, nav, #created > p > a {
+    font-family: var(--font-heading);
+}
+
+button, nav > a, #created > p > a {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+}
+
+svg path {
+    color: white;
+}
+
+nav > a {
+    text-decoration: none;
+    background: var(--background);
+    padding: .6rem;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .4rem;
+    border-radius: .4rem;
+    min-width: 0;
+    width: 100%;
+}
+
+nav > a:visited, #created > p > a:visited {
+    color: var(--text);
+}
+
+nav > a > span {
+    color: var(--text);
 }
 
 #sidebar {
@@ -27,12 +75,36 @@ body {
     flex-direction: column;
 }
 
-#sidebar[aria-expanded='false'] {
-    width: 75px;
+#sidebar.collapsed {
+    width: 96px;
 }
 
 #sidebar .bottom {
     margin-top: auto;
+}
+
+
+
+#sidebar #toggle[aria-expanded="false"] span,
+#sidebar.collapsed nav > a > span,
+#sidebar.collapsed #created,
+#sidebar.collapsed #sidebar-header {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+}
+
+#sidebar.collapsed #created {
+    display: none;
+}
+#sidebar #toggle[aria-expanded="false"] #toggle-icon {
+    transform: rotate(180deg);
+}
+
+#sidebar.collapsed nav > a, #sidebar #toggle[aria-expanded="false"] {
+    gap: 0;
+    width: 48px;
+    justify-content: center;
 }
 
 #content {
@@ -160,7 +232,7 @@ body {
     height: 100%;
 }
 
-#home {
+#content > * {
     min-height: 100%;
     width: 100%;
     max-width: 1240px;
@@ -174,4 +246,18 @@ body {
 #home figure {
     display: inline-flex;
     max-width: 700px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--background);
+    color: var(--text);
+    border: 1px solid transparent;
+    border-radius: .4rem;
+    padding: .6rem;
+    justify-content: space-between;
+    gap: .4rem;
+    min-width: 24px;
+    width: 100%;
 }
