@@ -123,12 +123,12 @@ export const dom = {
             return container;
         },
 
-        "game_page": () => {
+        "game_page": (game) => {
             const container = dom.create('div', 'game', null, ['page']);
 
 
 
-            return null;
+            return container;
         },
 
         "settings_page": () => {

@@ -1,34 +1,51 @@
 import { dom } from './dom.js';
+import Game from './Game.js';
+import { storage } from './storage.js';
 
 const routes = {
     "/": {
         title: 'Home',
-        render: dom.build.home_page(),
+        render: () => dom.build.home_page(),
     },
 
     "/play": {
         title: 'Play',
-        render: dom.build.game_page(),
+        render: () => dom.build.game_page(new Game()),
     },
 
     "/settings": {
         title: 'Settings',
-        render: dom.build.settings_page(),
+        render: () => dom.build.settings_page(),
     },
 
     "/error": {
         title: 'Not Found',
-        render: dom.build.error_page(),
+        render: () => dom.build.error_page(),
     }
 }
 
 const router = () => {
     const app = dom.find('#content');
-    let page = routes[window.location.pathname];
+    const hash = window.location.pathname;
 
-    if (!page || page.render == null) { page = routes['/error']; }
+    if (hash === '/play') {
+        window.addEventListener('hashchange', () => {
+            const confirmed = window.confirm('Are you sure you want to leave? Game progress will be lost.');
+            if (!confirmed) { return; }
+        });
+    }
+    storage.set('last-hash', hash);
 
-    app.replaceChildren(page.render);
+
+    let page = routes[hash] || routes['/error'];
+    let content = page.render();
+
+    if (content == null) {
+        page = routes['/error'];
+        content = page.render();
+    }
+
+    app.replaceChildren(content);
     document.title = `Battleship - ${page.title}`;
 }
 
