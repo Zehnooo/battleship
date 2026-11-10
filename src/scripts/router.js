@@ -28,15 +28,6 @@ const router = () => {
     const app = dom.find('#content');
     const hash = window.location.pathname;
 
-    if (hash === '/play') {
-        window.addEventListener('hashchange', () => {
-            const confirmed = window.confirm('Are you sure you want to leave? Game progress will be lost.');
-            if (!confirmed) { return; }
-        });
-    }
-    storage.set('last-hash', hash);
-
-
     let page = routes[hash] || routes['/error'];
     let content = page.render();
 
@@ -49,7 +40,21 @@ const router = () => {
     document.title = `Battleship - ${page.title}`;
 }
 
+const confirmLeave = (currentPath, destination) => {
+    if (currentPath !== '/play' || destination === '/play') {
+        return true;
+    }
+
+    return window.confirm(
+        'Leaving this game will erase your progress. Are you sure?'
+    );
+};
+
 const navigate = (path) => {
+    if (!confirmLeave(window.location.pathname, path)) {
+        return;
+    }
+
     window.history.pushState({}, "", path);
     router();
 }
