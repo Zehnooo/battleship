@@ -1,3 +1,5 @@
+import largeLogo from '../assets/images/logo-large.png';
+
 export const dom = {
 
     "find": (selector) => {
@@ -83,6 +85,50 @@ export const dom = {
             tile.appendChild(span);
             tileEl.appendChild(tile);
             return tileEl;
+        },
+
+        "home_page": () => {
+            const div = dom.create('div', 'home', null, ['page']);
+
+            const logoFig = dom.create('figure');
+
+            const logo = dom.create('img', null, null, ['logo']);
+            logo.src = largeLogo;
+
+
+            const link = dom.create('a', null, 'Start Game');
+            link.dataset.link = '';
+            link.href = '/play';
+
+
+            logoFig.append(logo);
+
+            div.append(logoFig, link);
+
+            return div;
+        },
+
+        "error_page": () => {
+            const container = dom.create('div', null, null, ['error-page', 'page']);
+
+            const title = dom.create('h1', null, '404 - Page Not Found');
+            const message = dom.create('p', null, "The page you're looking for doesn't exist.");
+            const homeLink = dom.create('a', null, 'Return to Home', ['error-page-link']);
+
+            homeLink.href = '/';
+            homeLink.dataset.link = '';
+
+            container.append(title, message, homeLink);
+
+            return container;
+        },
+
+        "game_page": () => {
+            return null;
+        },
+
+        "settings_page": () => {
+            return null;
         }
     }
 }
