@@ -26,7 +26,8 @@ const router = () => {
     const app = dom.find('#content');
     let page = routes[window.location.pathname];
 
-    if (page.render === null) { page = routes["/error"]; }
+    if (!page || page.render == null) { page = routes['/error']; }
+
     app.replaceChildren(page.render);
     document.title = `Battleship - ${page.title}`;
 }
