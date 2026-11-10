@@ -3,27 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>TOP - Battleship</title>
-    <link rel="stylesheet" href="./reset.css">
-    <link rel="stylesheet" href="./styles.css">
-
-    <!--[if IE]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script type="module" src="./scripts/index.js" defer></script>
 </head>
 
-<body id="home">
+<body>
 <aside id="sidebar">
-    <div id="sidebar-header"><h3>Battleship</h3></div>
+    <div id="sidebar-header"><figure><img class="logo" src="./assets/images/logo.png"></figure></div>
     <nav>
-    <button>New Game</button>
+    <a href="/" data-link>Home</a>
+    <a href="/play" data-link>Play</a>
+    <a href="/settings" data-link>Settings</a>
     </nav>
     <div id="tools">
         <button id="collapse" class="btn">Collapse</button>
     </div>
 </aside>
-<main id="game">
-    <div class="boards-container">
+<main id="content">
+    <div id="game" class="boards-container">
         <section id="player-section" class="section"></section>
         <section id="computer-section" class="section"></section>
     </div>
